@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
 {
     public class DocumentProcessingService : IDocumentProcessingService
     {

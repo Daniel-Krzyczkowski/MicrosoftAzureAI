@@ -1,4 +1,9 @@
-﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services;
+﻿using Azure.Cosmos;
+using Azure.Cosmos.Serialization;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Data;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Data.Interfaces;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
@@ -17,6 +22,32 @@ namespace AzureAI.CognitiveSearch.CustomSkills
         {
             ConfigureSettings(builder);
 
+            var serviceProvider = builder.Services.BuildServiceProvider();
+            var cosmosDbSettings = serviceProvider.GetRequiredService<CosmosDbSettings>();
+            CosmosClientOptions cosmosClientOptions = new CosmosClientOptions
+            {
+                SerializerOptions = new CosmosSerializationOptions()
+                {
+                    PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
+                }
+            };
+            CosmosClient cosmosClient = new CosmosClient(cosmosDbSettings.ConnectionString, cosmosClientOptions);
+            CosmosDatabase database = cosmosClient.CreateDatabaseIfNotExistsAsync(cosmosDbSettings.DatabaseName)
+                                                   .GetAwaiter()
+                                                   .GetResult();
+            CosmosContainer container = database.CreateContainerIfNotExistsAsync(
+                cosmosDbSettings.ContainerName,
+                cosmosDbSettings.PartitionKeyPath,
+                400)
+                .GetAwaiter()
+                .GetResult();
+
+            builder.Services.AddSingleton(cosmosClient);
+            builder.Services.AddSingleton(typeof(IDataService<InvoiceData>), typeof(CosmosDbDataService<InvoiceData>));
+
+            builder.Services.AddSingleton<IDocumentProcessingService, DocumentProcessingService>();
+
+            builder.Services.AddSingleton<IDocumentProcessingService, DocumentProcessingService>();
             builder.Services.AddSingleton<IDocumentContentExtractor, DocumentContentExtractor>();
             builder.Services.AddHttpClient<IFormRecognizerService, FormRecognizerService>();
             builder.Services.AddSingleton<IDocumentProcessingService, DocumentProcessingService>();
@@ -38,6 +69,15 @@ namespace AzureAI.CognitiveSearch.CustomSkills
                 ModelId = _configuration["FormRecognizerSettings:ModelId"]
             };
             builder.Services.AddSingleton(formRecognizerSettings);
+
+            var cosmosDbSettings = new CosmosDbSettings()
+            {
+                ConnectionString = _configuration["CosmosDbSettings:ConnectionString"],
+                ContainerName = _configuration["CosmosDbSettings:ContainerName"],
+                DatabaseName = _configuration["CosmosDbSettings:DatabaseName"],
+                PartitionKeyPath = _configuration["CosmosDbSettings:PartitionKeyPath"]
+            };
+            builder.Services.AddSingleton(cosmosDbSettings);
         }
     }
 }

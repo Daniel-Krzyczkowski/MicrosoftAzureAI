@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
 {
     public class DocumentContentExtractor : IDocumentContentExtractor
     {
