@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model
 {
@@ -74,7 +73,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model
         public VatID VatID { get; set; }
     }
 
-    public class Charges :BaseField
+    public class Charges : BaseField
     {
         public string fieldName => "Charges";
     }

@@ -1,8 +1,6 @@
 ﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services

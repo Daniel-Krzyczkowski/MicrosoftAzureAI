@@ -5,8 +5,6 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 [assembly: FunctionsStartup(typeof(AzureAI.CognitiveSearch.CustomSkills.Startup))]
 namespace AzureAI.CognitiveSearch.CustomSkills
