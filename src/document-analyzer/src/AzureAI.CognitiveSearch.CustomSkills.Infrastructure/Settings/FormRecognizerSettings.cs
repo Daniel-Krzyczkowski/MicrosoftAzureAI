@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Settings
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings
 {
     public class FormRecognizerSettings
     {

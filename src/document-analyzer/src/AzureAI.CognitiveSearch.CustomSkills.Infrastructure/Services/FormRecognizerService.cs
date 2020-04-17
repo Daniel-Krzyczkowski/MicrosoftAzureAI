@@ -1,6 +1,6 @@
-﻿using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Model;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Settings;
+﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services
 {
     public class FormRecognizerService : IFormRecognizerService
     {

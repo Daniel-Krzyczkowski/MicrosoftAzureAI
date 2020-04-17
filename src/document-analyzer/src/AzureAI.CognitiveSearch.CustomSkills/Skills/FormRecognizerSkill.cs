@@ -7,12 +7,12 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Constants;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Constants;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
 using System.Collections.Generic;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Model;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
 
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills
+namespace AzureAI.CognitiveSearch.CustomSkills
 {
     public class FormRecognizerSkill
     {

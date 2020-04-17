@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
@@ -8,7 +8,7 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure\AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.csproj" />
+    <ProjectReference Include="..\AzureAI.CognitiveSearch.CustomSkills.Infrastructure\AzureAI.CognitiveSearch.CustomSkills.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

@@ -1,6 +1,6 @@
-﻿using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Constants;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Model;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
+﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Constants;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services
 {
     public class DocumentProcessingService : IDocumentProcessingService
     {

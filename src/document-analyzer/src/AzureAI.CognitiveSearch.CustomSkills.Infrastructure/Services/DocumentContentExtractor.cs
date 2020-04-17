@@ -1,11 +1,11 @@
-﻿using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
+﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services
 {
     public class DocumentContentExtractor : IDocumentContentExtractor
     {

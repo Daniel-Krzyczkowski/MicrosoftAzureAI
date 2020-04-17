@@ -1,6 +1,6 @@
-﻿using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
-using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Settings;
+﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,8 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-[assembly: FunctionsStartup(typeof(AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Startup))]
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills
+[assembly: FunctionsStartup(typeof(AzureAI.CognitiveSearch.CustomSkills.Startup))]
+namespace AzureAI.CognitiveSearch.CustomSkills
 {
     class Startup : FunctionsStartup
     {

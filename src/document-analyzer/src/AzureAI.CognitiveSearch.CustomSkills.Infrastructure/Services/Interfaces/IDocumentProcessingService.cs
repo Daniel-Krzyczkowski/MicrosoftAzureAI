@@ -1,11 +1,11 @@
-﻿using AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Model;
+﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureDeveloperTemplates.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces
+namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces
 {
     public interface IDocumentProcessingService
     {
