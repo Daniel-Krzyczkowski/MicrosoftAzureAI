@@ -1,12 +1,9 @@
-﻿using Azure;
-using Azure.Cosmos;
+﻿using Azure.Cosmos;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Data.Interfaces;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Data

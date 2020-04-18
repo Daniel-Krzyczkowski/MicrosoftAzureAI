@@ -1,5 +1,6 @@
 ﻿using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Constants;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Model;
+using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Data.Interfaces;
 using AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -15,14 +16,17 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
     {
         private readonly IDocumentContentExtractor _documentContentExtractor;
         private readonly IFormRecognizerService _formRecognizerService;
+        private readonly IDataService<InvoiceData> _dataService;
         private readonly ILogger<DocumentProcessingService> _log;
 
         public DocumentProcessingService(IDocumentContentExtractor documentContentExtractor,
                                                                 IFormRecognizerService formRecognizerService,
+                                                                IDataService<InvoiceData> dataService,
                                                                 ILogger<DocumentProcessingService> log)
         {
             _documentContentExtractor = documentContentExtractor;
             _formRecognizerService = formRecognizerService;
+            _dataService = dataService;
             _log = log;
         }
 
@@ -36,7 +40,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
             }
         }
 
-        public async Task<WebApiSkillResponse> ProcessRequestRecordsAsync(IEnumerable<WebApiRequestRecord> requestRecords)
+        public async Task<WebApiSkillResponse> ProcessInvoicesRecordsAsync(IEnumerable<WebApiRequestRecord> requestRecords)
         {
             WebApiSkillResponse response = new WebApiSkillResponse();
 
@@ -49,7 +53,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
 
                 try
                 {
-                    outRecord = await ProcessRecord(inRecord, outRecord);
+                    outRecord = await ProcessInvoiceRecord(inRecord, outRecord);
                 }
 
                 catch (Exception e)
@@ -68,16 +72,17 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
             return response;
         }
 
-        private async Task<WebApiResponseRecord> ProcessRecord(WebApiRequestRecord webApiRequestRecord,
+        private async Task<WebApiResponseRecord> ProcessInvoiceRecord(WebApiRequestRecord webApiRequestRecord,
                                                                         WebApiResponseRecord webApiResponseRecord)
         {
             var formUrl = webApiRequestRecord.Data["formUrl"] as string;
 
             _log.LogInformation($"{ServiceConstants.FormAnalyzerServiceName} - Got form URL: {formUrl}");
 
-            var analysisResult = await ProcessDocument(formUrl);
+            var analysisResult = await ProcessInvoiceDocumentContent(formUrl);
 
             webApiResponseRecord.Data = new Dictionary<string, object>();
+            var invoiceData = new InvoiceData();
 
             if (analysisResult.documentResults != null)
             {
@@ -90,6 +95,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.Charges != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.Charges.fieldName, documentFields.Charges.text);
+                            invoiceData.Charges = documentFields.Charges.text;
                         }
                         else
                         {
@@ -98,6 +104,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.ForCompany != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.ForCompany.fieldName, documentFields.ForCompany.text);
+                            invoiceData.ForCompany = documentFields.ForCompany.text;
                         }
                         else
                         {
@@ -106,6 +113,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.FromCompany != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.FromCompany.fieldName, documentFields.FromCompany.text);
+                            invoiceData.FromCompany = documentFields.FromCompany.text;
                         }
                         else
                         {
@@ -114,6 +122,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.InvoiceDate != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.InvoiceDate.fieldName, documentFields.InvoiceDate.text);
+                            invoiceData.InvoiceDate = documentFields.InvoiceDate.text;
                         }
                         else
                         {
@@ -122,6 +131,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.InvoiceDueDate != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.InvoiceDueDate.fieldName, documentFields.InvoiceDueDate.text);
+                            invoiceData.InvoiceDueDate = documentFields.InvoiceDueDate.text;
                         }
                         else
                         {
@@ -130,6 +140,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.InvoiceNumber != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.InvoiceNumber.fieldName, documentFields.InvoiceNumber.text);
+                            invoiceData.InvoiceNumber = documentFields.InvoiceNumber.text;
                         }
                         else
                         {
@@ -138,6 +149,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                         if (documentFields.VatID != null)
                         {
                             webApiResponseRecord.Data.Add(documentFields.VatID.fieldName, documentFields.VatID.text);
+                            invoiceData.VatID = documentFields.VatID.text;
                         }
                         else
                         {
@@ -155,10 +167,11 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                 _log.LogError($"{ServiceConstants.FormAnalyzerServiceName} - Cannot get any document results from the form with URL: {formUrl}");
             }
 
+            await _dataService.AddAsync(invoiceData);
             return webApiResponseRecord;
         }
 
-        private async Task<AnalyzeResult> ProcessDocument(string documentUrl)
+        private async Task<AnalyzeResult> ProcessInvoiceDocumentContent(string documentUrl)
         {
             var document = await _documentContentExtractor.DownloadDocument(documentUrl);
             if (document != null)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings
+﻿namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Settings
 {
     public class CosmosDbSettings
     {

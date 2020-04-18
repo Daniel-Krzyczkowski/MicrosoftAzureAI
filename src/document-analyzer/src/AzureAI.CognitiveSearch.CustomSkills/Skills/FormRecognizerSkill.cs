@@ -33,7 +33,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills
                 return new BadRequestObjectResult($"{ServiceConstants.FormAnalyzerServiceName} - Invalid request record array.");
             }
 
-            WebApiSkillResponse response = await _documentProcessingService.ProcessRequestRecordsAsync(requestRecords);
+            WebApiSkillResponse response = await _documentProcessingService.ProcessInvoicesRecordsAsync(requestRecords);
             return new OkObjectResult(response);
         }
     }
