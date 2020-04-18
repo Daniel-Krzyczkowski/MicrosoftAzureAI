@@ -17,7 +17,7 @@ Please use [this](https://docs.microsoft.com/en-us/azure/cognitive-services/form
 
 Below steps show how Form Recognizer model was trained:
 
-1. Upload test files to the Azure Blob Storage:
+1. Upload [test](https://github.com/Daniel-Krzyczkowski/AzureAI/blob/master/src/document-analyzer/sample_data.zip) files to the Azure Blob Storage:
 
 
 ![document-analyzer.png](images/document-analyzer3.PNG)
