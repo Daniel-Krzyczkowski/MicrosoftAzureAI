@@ -45,6 +45,11 @@ Below steps show how Form Recognizer model was trained:
 ![document-analyzer.png](images/document-analyzer12.PNG)
 
 
+## Setup Azure Function App
+
+Azure Function App source code for processing and inserting data to the Cosmos DB is available in [this](https://github.com/Daniel-Krzyczkowski/AzureAI/tree/master/src/document-analyzer/src) repository.
+
+
 ## Setup Azure Logic App
 
 Below steps show how Azure Logic App is configured:
@@ -54,3 +59,4 @@ Below steps show how Azure Logic App is configured:
 ![document-analyzer.png](images/document-analyzer2.PNG)
 
 ![document-analyzer.png](images/document-analyzer14.PNG)
+
