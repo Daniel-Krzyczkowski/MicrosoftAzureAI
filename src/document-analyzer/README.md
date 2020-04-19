@@ -4,6 +4,9 @@
 
 This repository contains source code and guide how to build document analyzer with Function App, Form Recognizer, Logic App and Cosmos DB.
 
+![document-analyzer.png](images/document-analyzer15.png)
+
+
 ## Prepare resource group with Azure services
 
 Below image presents azure services used in the solution:
