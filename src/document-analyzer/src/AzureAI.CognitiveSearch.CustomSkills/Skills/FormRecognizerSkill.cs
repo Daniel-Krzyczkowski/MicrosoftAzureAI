@@ -27,7 +27,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills
         {
             log.LogInformation($"{ServiceConstants.FormAnalyzerServiceName} Custom Skill: C# HTTP trigger function processed a request.");
 
-            IList<WebApiRequestRecord> requestRecords = await _documentProcessingService.DeserializeRequest(req);
+            IList<WebApiRequestRecord> requestRecords = await _documentProcessingService.DeserializeRequestAsync(req);
             if (requestRecords == null)
             {
                 return new BadRequestObjectResult($"{ServiceConstants.FormAnalyzerServiceName} - Invalid request record array.");

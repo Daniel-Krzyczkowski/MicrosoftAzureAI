@@ -7,7 +7,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
 {
     public class DocumentContentExtractor : IDocumentContentExtractor
     {
-        public async Task<byte[]> DownloadDocument(string documentUrl)
+        public async Task<byte[]> DownloadDocumentAsync(string documentUrl)
         {
             using (var webClient = new WebClient())
             {

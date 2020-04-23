@@ -4,6 +4,6 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interface
 {
     public interface IDocumentContentExtractor
     {
-        Task<byte[]> DownloadDocument(string documentUrl);
+        Task<byte[]> DownloadDocumentAsync(string documentUrl);
     }
 }

@@ -30,7 +30,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
             _log = log;
         }
 
-        public async Task<IList<WebApiRequestRecord>> DeserializeRequest(HttpRequest request)
+        public async Task<IList<WebApiRequestRecord>> DeserializeRequestAsync(HttpRequest request)
         {
             using (StreamReader reader = new StreamReader(request.Body))
             {
@@ -173,15 +173,15 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
 
         private async Task<AnalyzeResult> ProcessInvoiceDocumentContent(string documentUrl)
         {
-            var document = await _documentContentExtractor.DownloadDocument(documentUrl);
+            var document = await _documentContentExtractor.DownloadDocumentAsync(documentUrl);
             if (document != null)
             {
-                var formAnalysisResultEndpoint = await _formRecognizerService.AnalyzeForm(document, documentUrl);
+                var formAnalysisResultEndpoint = await _formRecognizerService.AnalyzeFormAsync(document, documentUrl);
                 if (!string.IsNullOrEmpty(formAnalysisResultEndpoint))
                 {
                     Task delay = Task.Delay(5000);
                     await delay;
-                    var formAnalysisResult = await _formRecognizerService.GetFormAnalysisResult(formAnalysisResultEndpoint);
+                    var formAnalysisResult = await _formRecognizerService.GetFormAnalysisResultAsync(formAnalysisResultEndpoint);
                     if (formAnalysisResult != null)
                     {
                         return formAnalysisResult.analyzeResult;

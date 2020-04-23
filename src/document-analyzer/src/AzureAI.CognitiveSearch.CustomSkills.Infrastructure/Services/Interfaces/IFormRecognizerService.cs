@@ -5,7 +5,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interface
 {
     public interface IFormRecognizerService
     {
-        Task<string> AnalyzeForm(byte[] formDocument, string formDocumentUrl);
-        Task<FormAnalysisResponse> GetFormAnalysisResult(string formAnalysisResultEndpoint);
+        Task<string> AnalyzeFormAsync(byte[] formDocument, string formDocumentUrl);
+        Task<FormAnalysisResponse> GetFormAnalysisResultAsync(string formAnalysisResultEndpoint);
     }
 }

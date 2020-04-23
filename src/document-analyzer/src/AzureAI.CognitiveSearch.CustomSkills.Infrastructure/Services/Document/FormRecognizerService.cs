@@ -25,7 +25,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
             _log = log;
         }
 
-        public async Task<string> AnalyzeForm(byte[] formDocument, string formDocumentUrl)
+        public async Task<string> AnalyzeFormAsync(byte[] formDocument, string formDocumentUrl)
         {
             string formAnalysisUrl = _formRecognizerSettings.ApiEndpoint + "/models/" + Uri.EscapeDataString(_formRecognizerSettings.ModelId) + "/analyze";
 
@@ -57,7 +57,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
             return null;
         }
 
-        public async Task<FormAnalysisResponse> GetFormAnalysisResult(string formAnalysisResultEndpoint)
+        public async Task<FormAnalysisResponse> GetFormAnalysisResultAsync(string formAnalysisResultEndpoint)
         {
             if (!_httpClient.DefaultRequestHeaders.Contains("Ocp-Apim-Subscription-Key"))
             {
@@ -81,7 +81,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Document
                     Task delay = Task.Delay(5000);
                     await delay;
 
-                    formAnalysisResponse = await GetFormAnalysisResult(formAnalysisResultEndpoint);
+                    formAnalysisResponse = await GetFormAnalysisResultAsync(formAnalysisResultEndpoint);
                     return formAnalysisResponse;
                 }
 

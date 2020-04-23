@@ -7,7 +7,7 @@ namespace AzureAI.CognitiveSearch.CustomSkills.Infrastructure.Services.Interface
 {
     public interface IDocumentProcessingService
     {
-        Task<IList<WebApiRequestRecord>> DeserializeRequest(HttpRequest request);
+        Task<IList<WebApiRequestRecord>> DeserializeRequestAsync(HttpRequest request);
         Task<WebApiSkillResponse> ProcessInvoicesRecordsAsync(IEnumerable<WebApiRequestRecord> requestRecords);
     }
 }
