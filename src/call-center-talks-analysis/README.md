@@ -1,8 +1,22 @@
 # Call Center Talks Analysis
 
+## Introduction
+
+This repository contains source code and guide how to build call center talks analysis solution with Azure Function Apps, Azure Cognitive Services, Azure Video Indexer, Azure Cosmos DB and PowerBI.
+
+## Business case
+
+We need a solution to get insights related to call center talks.
+
+1. We would like to improve contact with our customers based on analysis of recorded audio and video or chat history
+2. We would like to know what is the average time of the talk in our call center
+3. We would like to count how many customers are satisfied with help which is given during the talk with call center assistant
+
+
+## Solution
+
+Below diagram presents solution build on the Microsoft Azure cloud that enables uploading PDF files with conversation history, or audio/video files of recorded conversation.
+
 ![call-center-talks-analysis.png](images/call-center-talks-analysis.png)
 
-This repository contains source code and guide how to build call center talks analysis solution with Function Apps, Cognitive Services, Azure Video Indexer, Azure Cosmos DB and PowerBI.
-
 ![call-center-talks-analysis-powerbi.png](images/call-center-talks-analysis-powerbi.png)
-
