@@ -1,7 +1,7 @@
 ﻿using AzureAI.CallCenterTalksAnalysis.Core.Model;
 using AzureAI.CallCenterTalksAnalysis.Core.Services.Interfaces;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Configuration.Interfaces;
-using AzureAI.CallCenterTalksAnalysis.Infrastructure.Model;
+using AzureAI.CallCenterTalksAnalysis.Infrastructure.DTOs;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage.Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -25,10 +25,14 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
                                                HttpClient httpClient,
                                                ILogger<AudioVideoFileProcessingService> log)
         {
-            _videoIndexerServiceConfiguration = videoIndexerServiceConfiguration;
-            _storageService = storageService;
-            _httpClient = httpClient;
-            _log = log;
+            _videoIndexerServiceConfiguration = videoIndexerServiceConfiguration
+                        ?? throw new ArgumentNullException(nameof(videoIndexerServiceConfiguration));
+            _storageService = storageService
+                        ?? throw new ArgumentNullException(nameof(storageService));
+            _httpClient = httpClient
+                        ?? throw new ArgumentNullException(nameof(httpClient));
+            _log = log
+                        ?? throw new ArgumentNullException(nameof(log));
         }
 
         public async Task<FileAnalysisResult> AnalyzeFileContent(InputFileData inputFileData)

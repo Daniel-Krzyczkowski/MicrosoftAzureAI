@@ -4,6 +4,7 @@ using AzureAI.CallCenterTalksAnalysis.FunctionApps.Utils;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
@@ -14,7 +15,8 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
 
         public AudioVideoFileAnalyzer(IAudioVideoFileProcessingService audioVideoFileProcessingService)
         {
-            _audioVideoFileProcessingService = audioVideoFileProcessingService;
+            _audioVideoFileProcessingService = audioVideoFileProcessingService
+                          ?? throw new ArgumentNullException(nameof(audioVideoFileProcessingService));
         }
 
         [FunctionName(FunctionNamesRepository.AudioVideoFileAnalyzerFunc)]

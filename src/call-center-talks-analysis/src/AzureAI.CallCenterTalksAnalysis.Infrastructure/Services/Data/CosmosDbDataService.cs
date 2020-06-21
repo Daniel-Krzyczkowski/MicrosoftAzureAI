@@ -4,6 +4,7 @@ using AzureAI.CallCenterTalksAnalysis.Core.Model;
 using AzureAI.CallCenterTalksAnalysis.Core.Services.Interfaces;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Configuration.Interfaces;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,14 +14,18 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
     {
         private readonly ICosmosDbDataServiceConfiguration _dataServiceConfiguration;
         private readonly CosmosClient _client;
-        private readonly ILogger<CosmosDbDataService<T>> _logger;
+        private readonly ILogger<CosmosDbDataService<T>> _log;
 
-        public CosmosDbDataService(ICosmosDbDataServiceConfiguration dataServiceConfiguration, CosmosClient client,
-                                                                                               ILogger<CosmosDbDataService<T>> logger)
+        public CosmosDbDataService(ICosmosDbDataServiceConfiguration dataServiceConfiguration,
+                                   CosmosClient client,
+                                   ILogger<CosmosDbDataService<T>> log)
         {
-            _dataServiceConfiguration = dataServiceConfiguration;
-            _client = client;
-            _logger = logger;
+            _dataServiceConfiguration = dataServiceConfiguration
+                    ?? throw new ArgumentNullException(nameof(dataServiceConfiguration));
+            _client = client
+                    ?? throw new ArgumentNullException(nameof(client));
+            _log = log
+                    ?? throw new ArgumentNullException(nameof(log));
         }
 
         public async Task<T> AddAsync(T newEntity)
@@ -33,7 +38,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
             }
             catch (CosmosException ex)
             {
-                _logger.LogError($"New entity with ID: {newEntity.Id} was not added successfully - error details: {ex.Message}");
+                _log.LogError($"New entity with ID: {newEntity.Id} was not added successfully - error details: {ex.Message}");
                 throw;
             }
         }
@@ -48,7 +53,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
             }
             catch (CosmosException ex)
             {
-                _logger.LogError($"Entity with ID: {entity.Id} was not removed successfully - error details: {ex.Message}");
+                _log.LogError($"Entity with ID: {entity.Id} was not removed successfully - error details: {ex.Message}");
                 throw;
             }
         }
@@ -65,7 +70,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
             }
             catch (CosmosException ex)
             {
-                _logger.LogError($"Entity with ID: {entity.Id} was not retrieved successfully - error details: {ex.Message}");
+                _log.LogError($"Entity with ID: {entity.Id} was not retrieved successfully - error details: {ex.Message}");
                 throw;
             }
         }
@@ -88,7 +93,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
             }
             catch (CosmosException ex)
             {
-                _logger.LogError($"Entity with ID: {entity.Id} was not updated successfully - error details: {ex.Message}");
+                _log.LogError($"Entity with ID: {entity.Id} was not updated successfully - error details: {ex.Message}");
                 throw;
             }
         }
@@ -126,7 +131,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
             }
             catch (CosmosException ex)
             {
-                _logger.LogError($"Entities was not retrieved successfully - error details: {ex.Message}");
+                _log.LogError($"Entities was not retrieved successfully - error details: {ex.Message}");
                 throw;
             }
         }

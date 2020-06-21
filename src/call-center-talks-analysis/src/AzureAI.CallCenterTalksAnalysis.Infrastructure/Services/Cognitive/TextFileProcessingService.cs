@@ -22,10 +22,14 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
                                          IOcrScannerService ocrScannerService,
                                          ILogger<TextFileProcessingService> log)
         {
-            _textAnalyticsClient = textAnalyticsClient;
-            _storageService = storageService;
-            _ocrScannerService = ocrScannerService;
-            _log = log;
+            _textAnalyticsClient = textAnalyticsClient
+                    ?? throw new ArgumentNullException(nameof(textAnalyticsClient));
+            _storageService = storageService
+                    ?? throw new ArgumentNullException(nameof(storageService));
+            _ocrScannerService = ocrScannerService
+                    ?? throw new ArgumentNullException(nameof(ocrScannerService));
+            _log = log
+                    ?? throw new ArgumentNullException(nameof(log));
         }
 
         public async Task<FileAnalysisResult> AnalyzeFileContent(InputFileData inputFileData)

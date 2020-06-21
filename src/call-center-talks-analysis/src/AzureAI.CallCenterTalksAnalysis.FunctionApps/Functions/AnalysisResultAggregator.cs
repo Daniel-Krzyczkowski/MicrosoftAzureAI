@@ -4,6 +4,7 @@ using AzureAI.CallCenterTalksAnalysis.FunctionApps.Utils;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
@@ -14,7 +15,7 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
 
         public AnalysisResultAggregator(IDataService<FileAnalysisResult> dataService)
         {
-            _dataService = dataService;
+            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
         }
 
         [FunctionName(FunctionNamesRepository.AnalysisResultAggregatorFunc)]

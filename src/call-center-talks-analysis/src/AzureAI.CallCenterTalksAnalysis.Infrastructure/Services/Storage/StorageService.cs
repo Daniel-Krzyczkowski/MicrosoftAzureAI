@@ -15,14 +15,17 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
     {
         private readonly IStorageServiceConfiguration _storageServiceConfiguration;
         private readonly BlobServiceClient _blobServiceClient;
-        private readonly ILogger<StorageService> _logger;
+        private readonly ILogger<StorageService> _log;
         public StorageService(IStorageServiceConfiguration storageServiceConfiguration,
                               BlobServiceClient blobServiceClient,
-                              ILogger<StorageService> logger)
+                              ILogger<StorageService> log)
         {
-            _storageServiceConfiguration = storageServiceConfiguration;
-            _blobServiceClient = blobServiceClient;
-            _logger = logger;
+            _storageServiceConfiguration = storageServiceConfiguration
+                    ?? throw new ArgumentNullException(nameof(storageServiceConfiguration));
+            _blobServiceClient = blobServiceClient
+                    ?? throw new ArgumentNullException(nameof(blobServiceClient));
+            _log = log
+                    ?? throw new ArgumentNullException(nameof(log));
         }
 
         public async Task DeleteBlobIfExistsAsync(string blobName)
@@ -35,7 +38,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
             }
             catch (RequestFailedException ex)
             {
-                _logger.LogError($"Document {blobName} was not deleted successfully - error details: {ex.Message}");
+                _log.LogError($"Document {blobName} was not deleted successfully - error details: {ex.Message}");
                 throw;
             }
         }
@@ -51,7 +54,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
             }
             catch (RequestFailedException ex)
             {
-                _logger.LogError($"Document {blobName} existence cannot be verified - error details: {ex.Message}");
+                _log.LogError($"Document {blobName} existence cannot be verified - error details: {ex.Message}");
                 throw;
             }
         }
@@ -73,7 +76,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
 
             catch (RequestFailedException ex)
             {
-                _logger.LogError($"Cannot download document {blobName} - error details: {ex.Message}");
+                _log.LogError($"Cannot download document {blobName} - error details: {ex.Message}");
                 throw;
             }
         }
@@ -92,7 +95,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
             }
             catch (RequestFailedException ex)
             {
-                _logger.LogError($"Url for document {blobName} was not found - error details: {ex.Message}");
+                _log.LogError($"Url for document {blobName} was not found - error details: {ex.Message}");
                 throw;
             }
         }
@@ -110,7 +113,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
 
             catch (RequestFailedException ex)
             {
-                _logger.LogError($"Document {blobName} was not uploaded successfully - error details: {ex.Message}");
+                _log.LogError($"Document {blobName} was not uploaded successfully - error details: {ex.Message}");
                 throw;
             }
         }
@@ -128,7 +131,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
             }
             catch (RequestFailedException ex)
             {
-                _logger.LogError($"Cannot find blob container: {_storageServiceConfiguration.ContainerName} - error details: {ex.Message}");
+                _log.LogError($"Cannot find blob container: {_storageServiceConfiguration.ContainerName} - error details: {ex.Message}");
                 throw;
             }
         }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Model
+namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.DTOs
 {
     internal class AudioVideoAnalysisResult
     {

@@ -2,6 +2,7 @@
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,8 +16,10 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
         public OcrScannerService(ComputerVisionClient computerVisionClient,
                                  ILogger<OcrScannerService> log)
         {
-            _computerVisionClient = computerVisionClient;
-            _log = log;
+            _computerVisionClient = computerVisionClient
+                    ?? throw new ArgumentNullException(nameof(computerVisionClient));
+            _log = log
+                    ?? throw new ArgumentNullException(nameof(log));
         }
 
         public async Task<string> ScanDocumentAndGetResults(string documentUrl)
