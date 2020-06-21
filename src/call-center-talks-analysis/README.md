@@ -21,6 +21,17 @@ Below diagram presents solution build on the Microsoft Azure cloud that enables 
 
 ![call-center-talks-analysis.png](images/call-center-talks-analysis.png)
 
+### Components used:
+
+1. Azure Storage Account (Blob Storage)
+2. Azure Durable Functions
+3. Azure Cognitive Services Text Analytics
+4. Azure Cognitive Services Computer Vision
+5. Azure Video Indexer
+6. Azure Cosmos DB
+7. Power BI
+
+
 ![call-center-talks-analysis-video-indexer.PNG](images/call-center-talks-analysis-video-indexer.PNG)
 
 ![call-center-talks-analysis-powerbi.png](images/call-center-talks-analysis-powerbi.png)
