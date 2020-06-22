@@ -28,6 +28,7 @@ The below diagram presents a solution built on the Microsoft Azure cloud that en
 5. Azure Video Indexer (to [analyze audio and video](https://docs.microsoft.com/en-us/azure/media-services/video-indexer/video-indexer-overview) content)
 6. Azure Cosmos DB (to store analysis results as [JSON documents](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction))
 7. Power BI (to [visualize collected data](https://powerbi.microsoft.com/en-us/desktop/) in a form of report)
+8. Azure Application Insights to monitor solution and discover issues
 
 
 ![call-center-talks-analysis-video-indexer.PNG](images/call-center-talks-analysis-video-indexer.PNG)
