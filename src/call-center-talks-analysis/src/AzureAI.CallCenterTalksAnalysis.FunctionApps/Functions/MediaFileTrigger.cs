@@ -10,7 +10,7 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
     public class MediaFileTrigger
     {
         [FunctionName("func-media-file-trigger")]
-        public async Task Run([BlobTrigger("files-for-analysis/{name}", Connection = "BlobStorageConnectionString")] Stream fileForAnalysis,
+        public async Task RunAsync([BlobTrigger("files-for-analysis/{name}", Connection = "BlobStorageConnectionString")] Stream fileForAnalysis,
                                                                                          string name,
                                                                                          Uri uri,
                                                                                          [DurableClient] IDurableOrchestrationClient starter,

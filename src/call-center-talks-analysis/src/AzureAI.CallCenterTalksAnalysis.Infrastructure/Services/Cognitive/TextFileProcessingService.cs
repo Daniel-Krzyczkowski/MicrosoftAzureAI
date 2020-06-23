@@ -32,14 +32,14 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
                     ?? throw new ArgumentNullException(nameof(log));
         }
 
-        public async Task<FileAnalysisResult> AnalyzeFileContent(InputFileData inputFileData)
+        public async Task<FileAnalysisResult> AnalyzeFileContentAsync(InputFileData inputFileData)
         {
             if (inputFileData.FileContentType == FileContentType.PDF)
             {
                 var sasToken = _storageService.GenerateSasToken();
                 inputFileData.FilePath = $"{inputFileData.FilePath}?{sasToken}";
 
-                var textFromTheInputDocument = await _ocrScannerService.ScanDocumentAndGetResults(inputFileData.FilePath);
+                var textFromTheInputDocument = await _ocrScannerService.ScanDocumentAndGetResultsAsync(inputFileData.FilePath);
                 var sentimentAnalysisResponse = await _textAnalyticsClient.AnalyzeSentimentAsync(textFromTheInputDocument);
                 if (sentimentAnalysisResponse != null)
                 {

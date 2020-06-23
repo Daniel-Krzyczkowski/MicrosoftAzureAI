@@ -5,6 +5,6 @@ namespace AzureAI.CallCenterTalksAnalysis.Core.Services.Interfaces
 {
     public interface IFileProcessingService
     {
-        Task<FileAnalysisResult> AnalyzeFileContent(InputFileData inputFileData);
+        Task<FileAnalysisResult> AnalyzeFileContentAsync(InputFileData inputFileData);
     }
 }

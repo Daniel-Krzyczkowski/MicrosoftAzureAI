@@ -4,6 +4,6 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive.Inte
 {
     public interface IOcrScannerService
     {
-        Task<string> ScanDocumentAndGetResults(string documentUrl);
+        Task<string> ScanDocumentAndGetResultsAsync(string documentUrl);
     }
 }

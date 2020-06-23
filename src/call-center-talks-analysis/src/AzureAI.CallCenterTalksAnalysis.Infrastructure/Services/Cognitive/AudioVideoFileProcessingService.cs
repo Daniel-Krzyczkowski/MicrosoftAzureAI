@@ -35,7 +35,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
                         ?? throw new ArgumentNullException(nameof(log));
         }
 
-        public async Task<FileAnalysisResult> AnalyzeFileContent(InputFileData inputFileData)
+        public async Task<FileAnalysisResult> AnalyzeFileContentAsync(InputFileData inputFileData)
         {
             FileAnalysisResult fileAnalysisResult = new FileAnalysisResult();
             var sasToken = _storageService.GenerateSasToken();
@@ -43,7 +43,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
 
             AddApiKeyHeader();
 
-            var accountAccessToken = await GetVideoIndexerAccountAccessToken();
+            var accountAccessToken = await GetVideoIndexerAccountAccessTokenAsync();
 
             var content = new MultipartFormDataContent();
             var queryParams = CreateQueryString(
@@ -124,7 +124,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
             }
         }
 
-        private async Task<string> GetVideoIndexerAccountAccessToken()
+        private async Task<string> GetVideoIndexerAccountAccessTokenAsync()
         {
             var accountAccessTokenRequestResult = await _httpClient.GetAsync($"{_videoIndexerServiceConfiguration.Endpoint}/auth/" +
                 $"{_videoIndexerServiceConfiguration.Location}/Accounts/" +

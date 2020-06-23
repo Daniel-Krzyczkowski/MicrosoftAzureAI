@@ -20,9 +20,9 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
         }
 
         [FunctionName(FunctionNamesRepository.TextFileAnalyzerFunc)]
-        public async Task<FileAnalysisResult> AnalyzeAudioVideoFile([ActivityTrigger] InputFileData inputFileData, ILogger log)
+        public async Task<FileAnalysisResult> AnalyzeTextFileAsync([ActivityTrigger] InputFileData inputFileData, ILogger log)
         {
-            var fileAnalysisResult = await _textFileProcessingService.AnalyzeFileContent(inputFileData);
+            var fileAnalysisResult = await _textFileProcessingService.AnalyzeFileContentAsync(inputFileData);
             return fileAnalysisResult;
         }
     }

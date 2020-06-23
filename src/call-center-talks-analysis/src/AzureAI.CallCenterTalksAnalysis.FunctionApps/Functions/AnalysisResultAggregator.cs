@@ -19,7 +19,7 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
         }
 
         [FunctionName(FunctionNamesRepository.AnalysisResultAggregatorFunc)]
-        public async Task AggregateAnalysis([ActivityTrigger] FileAnalysisResult analysisResult, ILogger log)
+        public async Task AggregateAnalysisAsync([ActivityTrigger] FileAnalysisResult analysisResult, ILogger log)
         {
             if (analysisResult != null)
             {

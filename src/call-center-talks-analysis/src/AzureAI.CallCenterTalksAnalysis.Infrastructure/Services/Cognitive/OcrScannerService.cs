@@ -22,7 +22,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
                     ?? throw new ArgumentNullException(nameof(log));
         }
 
-        public async Task<string> ScanDocumentAndGetResults(string documentUrl)
+        public async Task<string> ScanDocumentAndGetResultsAsync(string documentUrl)
         {
             BatchReadFileHeaders batchReadFileHeaders = await _computerVisionClient.BatchReadFileAsync(documentUrl);
             string operationId = GetScanOperationResultId(batchReadFileHeaders.OperationLocation);

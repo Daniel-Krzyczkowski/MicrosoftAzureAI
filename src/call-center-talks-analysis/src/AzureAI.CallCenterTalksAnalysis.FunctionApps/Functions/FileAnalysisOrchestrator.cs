@@ -21,7 +21,7 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Functions
         }
 
         [FunctionName(FunctionNamesRepository.FileAnalysisOrchestratorFunc)]
-        public async Task RunOrchestrator(
+        public async Task RunOrchestratorAsync(
             [OrchestrationTrigger] IDurableOrchestrationContext context, ILogger log)
         {
             var fileLocation = context.GetInput<string>();
