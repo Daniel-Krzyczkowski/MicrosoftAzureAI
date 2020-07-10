@@ -1,7 +1,3 @@
-# Azure AI
+![azure-ai-repo.gif](images/azure-ai-repo.gif)
 
-![.NET Core](https://github.com/Daniel-Krzyczkowski/AzureAI/workflows/.NET%20Core/badge.svg)
-
-This repository contains samples related with Azure AI services.
-
-![azure-ai-repo.png](images/azure-ai-repo.png)
+## This repository contains samples related with Azure AI services.
