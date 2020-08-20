@@ -1,10 +1,10 @@
 ﻿using Azure;
+using Azure.AI.FormRecognizer;
 using Azure.AI.TextAnalytics;
 using AzureAI.CallCenterTalksAnalysis.Core.Services.Interfaces;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Configuration.Interfaces;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive.Interfaces;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -26,17 +26,15 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Core.DependencyInjection
                 return textAnalyticsClient;
             });
 
-            var computerVisionServiceConfiguration = serviceProvider.GetRequiredService<IComputerVisionServiceConfiguration>();
+            var computerVisionServiceConfiguration = serviceProvider.GetRequiredService<IFormRecognizerServiceConfiguration>();
             services.TryAddSingleton(implementationFactory =>
             {
-                var apiKeyServiceClientCredentials = new ApiKeyServiceClientCredentials(computerVisionServiceConfiguration.ApiKey);
-                ComputerVisionClient computerVisionClient = new ComputerVisionClient(apiKeyServiceClientCredentials)
-                {
-                    Endpoint = computerVisionServiceConfiguration.Endpoint
-                };
+                var credential = new AzureKeyCredential(computerVisionServiceConfiguration.ApiKey);
+                var formRecognizerClient = new FormRecognizerClient(new Uri(computerVisionServiceConfiguration.Endpoint), credential);
 
-                return computerVisionClient;
+                return formRecognizerClient;
             });
+
             services.AddSingleton<IOcrScannerService, OcrScannerService>();
 
             services.AddHttpClient<IAudioVideoFileProcessingService, AudioVideoFileProcessingService>()

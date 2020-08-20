@@ -36,10 +36,10 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Core.DependencyInjection
             var textAnalyticsServiceConfiguration = services.BuildServiceProvider().GetRequiredService<IOptions<TextAnalyticsServiceConfiguration>>().Value;
             services.AddSingleton<ITextAnalyticsServiceConfiguration>(textAnalyticsServiceConfiguration);
 
-            services.Configure<ComputerVisionServiceConfiguration>(config.GetSection("ComputerVisionServiceSettings"));
-            services.AddSingleton<IValidateOptions<ComputerVisionServiceConfiguration>, ComputerVisionServiceConfigurationValidation>();
-            var computerVisionServiceConfiguration = services.BuildServiceProvider().GetRequiredService<IOptions<ComputerVisionServiceConfiguration>>().Value;
-            services.AddSingleton<IComputerVisionServiceConfiguration>(computerVisionServiceConfiguration);
+            services.Configure<FormRecognizerServiceConfiguration>(config.GetSection("ComputerVisionServiceSettings"));
+            services.AddSingleton<IValidateOptions<FormRecognizerServiceConfiguration>, FormRecognizerServiceConfigurationValidation>();
+            var computerVisionServiceConfiguration = services.BuildServiceProvider().GetRequiredService<IOptions<FormRecognizerServiceConfiguration>>().Value;
+            services.AddSingleton<IFormRecognizerServiceConfiguration>(computerVisionServiceConfiguration);
 
             services.Configure<VideoIndexerServiceConfiguration>(config.GetSection("VideoIndexerServiceSettings"));
             services.AddSingleton<IValidateOptions<VideoIndexerServiceConfiguration>, VideoIndexerServiceConfigurationValidation>();
