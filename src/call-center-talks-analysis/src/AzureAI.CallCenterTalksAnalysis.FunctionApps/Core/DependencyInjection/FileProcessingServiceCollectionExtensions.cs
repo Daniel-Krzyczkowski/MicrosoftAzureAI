@@ -26,11 +26,11 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Core.DependencyInjection
                 return textAnalyticsClient;
             });
 
-            var computerVisionServiceConfiguration = serviceProvider.GetRequiredService<IFormRecognizerServiceConfiguration>();
+            var formRecognizerServiceConfiguration = serviceProvider.GetRequiredService<IFormRecognizerServiceConfiguration>();
             services.TryAddSingleton(implementationFactory =>
             {
-                var credential = new AzureKeyCredential(computerVisionServiceConfiguration.ApiKey);
-                var formRecognizerClient = new FormRecognizerClient(new Uri(computerVisionServiceConfiguration.Endpoint), credential);
+                var credential = new AzureKeyCredential(formRecognizerServiceConfiguration.ApiKey);
+                var formRecognizerClient = new FormRecognizerClient(new Uri(formRecognizerServiceConfiguration.Endpoint), credential);
 
                 return formRecognizerClient;
             });
