@@ -24,7 +24,7 @@ The below diagram presents a solution built on the Microsoft Azure cloud that en
 1. Azure Storage Account (Blob Storage)
 2. Azure Durable Functions (with [Fan out/Fan in pattern used](https://docs.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview?tabs=csharp#fan-in-out))
 3. Azure Cognitive Services Text Analytics (to apply [sentiment analysis](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#sentiment-analysis))
-4. Azure Cognitive Services Computer Vision (to apply [OCR scan](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts/csharp-print-text) on PDF files)
+4. Azure Cognitive Services Form Recognizer (to apply [OCR scan](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/?branch=release-build-cogserv-forms-recognizer) on PDF files)
 5. Azure Video Indexer (to [analyze audio and video](https://docs.microsoft.com/en-us/azure/media-services/video-indexer/video-indexer-overview) content)
 6. Azure Cosmos DB (to store analysis results as [JSON documents](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction))
 7. Power BI (to [visualize collected data](https://powerbi.microsoft.com/en-us/desktop/) in a form of report)
