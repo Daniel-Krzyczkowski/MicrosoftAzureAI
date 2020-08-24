@@ -19,12 +19,9 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Core.DependencyInjection
             var serviceProvider = services.BuildServiceProvider();
 
             var textAnalyticsServiceConfiguration = serviceProvider.GetRequiredService<ITextAnalyticsServiceConfiguration>();
-            services.TryAddSingleton(implementationFactory =>
-            {
-                TextAnalyticsClient textAnalyticsClient = new TextAnalyticsClient(new Uri(textAnalyticsServiceConfiguration.Endpoint),
-                                                                                  new AzureKeyCredential(textAnalyticsServiceConfiguration.ApiKey));
-                return textAnalyticsClient;
-            });
+            services.TryAddSingleton(factory => new TextAnalyticsClient(
+                new Uri(textAnalyticsServiceConfiguration.Endpoint),
+                new AzureKeyCredential(textAnalyticsServiceConfiguration.ApiKey)));
 
             var formRecognizerServiceConfiguration = serviceProvider.GetRequiredService<IFormRecognizerServiceConfiguration>();
             services.TryAddSingleton(implementationFactory =>
