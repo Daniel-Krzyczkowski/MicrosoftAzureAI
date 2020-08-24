@@ -15,12 +15,7 @@ namespace AzureAI.CallCenterTalksAnalysis.FunctionApps.Core.DependencyInjection
 
             var storageConfiguration = serviceProvider.GetRequiredService<IStorageServiceConfiguration>();
 
-            services.TryAddSingleton(implementationFactory =>
-            {
-                BlobServiceClient blobServiceClient = new BlobServiceClient(storageConfiguration.ConnectionString);
-                return blobServiceClient;
-            });
-
+            services.TryAddSingleton(factory => new BlobServiceClient(storageConfiguration.ConnectionString));
             services.AddSingleton<IStorageService, StorageService>();
             return services;
         }

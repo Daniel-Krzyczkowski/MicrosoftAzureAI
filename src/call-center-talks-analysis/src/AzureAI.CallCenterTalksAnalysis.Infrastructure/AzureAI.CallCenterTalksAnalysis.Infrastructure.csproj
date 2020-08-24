@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.AI.FormRecognizer" Version="3.0.0-preview.2" />
+    <PackageReference Include="Azure.AI.FormRecognizer" Version="3.0.0" />
     <PackageReference Include="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Include="Azure.Cosmos" Version="4.0.0-preview3" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.5.1" />

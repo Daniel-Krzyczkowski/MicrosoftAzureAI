@@ -1,4 +1,5 @@
-﻿using Azure.AI.TextAnalytics;
+﻿using Azure;
+using Azure.AI.TextAnalytics;
 using AzureAI.CallCenterTalksAnalysis.Core.Enums;
 using AzureAI.CallCenterTalksAnalysis.Core.Model;
 using AzureAI.CallCenterTalksAnalysis.Core.Services.Interfaces;
@@ -36,17 +37,20 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
         {
             if (inputFileData.FileContentType == FileContentType.PDF)
             {
-                var sasToken = _storageService.GenerateSasToken();
+                var sasToken = _storageService.GenerateSasTokenForContainer();
                 inputFileData.FilePath = $"{inputFileData.FilePath}?{sasToken}";
 
                 var textFromTheInputDocument = await _ocrScannerService.ScanDocumentAndGetResultsAsync(inputFileData.FilePath);
-                var sentimentAnalysisResponse = await _textAnalyticsClient.AnalyzeSentimentAsync(textFromTheInputDocument);
-                if (sentimentAnalysisResponse != null)
+                try
                 {
-                    var sentimentAnalysisResult = sentimentAnalysisResponse.Value;
+                    DocumentSentiment sentimentAnalysisResult = await _textAnalyticsClient.AnalyzeSentimentAsync(textFromTheInputDocument);
                     var fileAnalysisResult = new FileAnalysisResult();
                     fileAnalysisResult.SentimentValues.Add(sentimentAnalysisResult.Sentiment.ToString());
                     return fileAnalysisResult;
+                }
+                catch (RequestFailedException ex)
+                {
+                    _log.LogError($"An error occurred when analyzing sentiment with {nameof(TextAnalyticsClient)} service", ex);
                 }
             }
 

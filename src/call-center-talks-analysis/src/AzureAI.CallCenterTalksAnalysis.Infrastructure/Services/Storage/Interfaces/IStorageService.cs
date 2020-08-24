@@ -10,6 +10,6 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage.Interf
         Task DeleteBlobIfExistsAsync(string blobName);
         Task<bool> DoesBlobExistAsync(string blobName);
         Task<string> GetBlobUrl(string blobName);
-        string GenerateSasToken();
+        string GenerateSasTokenForContainer();
     }
 }

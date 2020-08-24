@@ -38,7 +38,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Cognitive
         public async Task<FileAnalysisResult> AnalyzeFileContentAsync(InputFileData inputFileData)
         {
             FileAnalysisResult fileAnalysisResult = new FileAnalysisResult();
-            var sasToken = _storageService.GenerateSasToken();
+            var sasToken = _storageService.GenerateSasTokenForContainer();
             var videoUrl = $"{inputFileData.FilePath}?{sasToken}";
 
             AddApiKeyHeader();

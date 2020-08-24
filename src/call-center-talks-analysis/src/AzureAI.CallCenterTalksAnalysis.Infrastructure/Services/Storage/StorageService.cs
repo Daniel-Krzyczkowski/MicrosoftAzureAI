@@ -136,7 +136,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
             }
         }
 
-        public string GenerateSasToken()
+        public string GenerateSasTokenForContainer()
         {
             BlobSasBuilder builder = new BlobSasBuilder();
             builder.BlobContainerName = _storageServiceConfiguration.ContainerName;
