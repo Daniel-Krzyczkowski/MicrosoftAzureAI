@@ -6,6 +6,7 @@ using AzureAI.CallCenterTalksAnalysis.Infrastructure.Configuration.Interfaces;
 using AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -66,18 +67,17 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
                 var container = await GetBlobContainer();
                 var blockBlob = container.GetBlobClient(blobName);
 
-                var doesBlobExist = await blockBlob.ExistsAsync();
+                await blockBlob.DownloadToAsync(stream);
 
-                if (doesBlobExist.Value == true)
-                {
-                    await blockBlob.DownloadToAsync(stream);
-                }
             }
 
             catch (RequestFailedException ex)
             {
                 _log.LogError($"Cannot download document {blobName} - error details: {ex.Message}");
-                throw;
+                if (ex.ErrorCode != "404")
+                {
+                    throw;
+                }
             }
         }
 
@@ -88,9 +88,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
                 var container = await GetBlobContainer();
                 var blockBlob = container.GetBlobClient(blobName);
 
-                var exists = await blockBlob.ExistsAsync();
-
-                string blobUrl = exists ? blockBlob.Uri.ToString() : string.Empty;
+                string blobUrl = blockBlob.Uri.AbsoluteUri;
                 return blobUrl;
             }
             catch (RequestFailedException ex)
@@ -104,6 +102,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Storage
         {
             try
             {
+                Debug.Assert(stream.CanSeek);
                 stream.Seek(0, SeekOrigin.Begin);
                 var container = await GetBlobContainer();
 

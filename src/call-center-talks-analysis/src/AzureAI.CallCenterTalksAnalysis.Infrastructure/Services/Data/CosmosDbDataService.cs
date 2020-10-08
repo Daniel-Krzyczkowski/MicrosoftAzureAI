@@ -32,14 +32,20 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
         {
             try
             {
-                var container = GetContainer();
+                CosmosContainer container = GetContainer();
                 ItemResponse<T> createResponse = await container.CreateItemAsync(newEntity);
                 return createResponse.Value;
             }
             catch (CosmosException ex)
             {
                 _log.LogError($"New entity with ID: {newEntity.Id} was not added successfully - error details: {ex.Message}");
-                throw;
+
+                if (ex.ErrorCode != "404")
+                {
+                    throw;
+                }
+
+                return null;
             }
         }
 
@@ -47,31 +53,40 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
         {
             try
             {
-                var container = GetContainer();
+                CosmosContainer container = GetContainer();
 
                 await container.DeleteItemAsync<T>(entity.Id.ToString(), new PartitionKey(entity.Id.ToString()));
             }
             catch (CosmosException ex)
             {
                 _log.LogError($"Entity with ID: {entity.Id} was not removed successfully - error details: {ex.Message}");
-                throw;
+
+                if (ex.ErrorCode != "404")
+                {
+                    throw;
+                }
             }
         }
 
-        public async Task<T> GetAsync(T entity)
+        public async Task<T> GetAsync(string entityId)
         {
             try
             {
-                var container = GetContainer();
+                CosmosContainer container = GetContainer();
 
-                ItemResponse<T> entityResult = await container
-                                                           .ReadItemAsync<T>(entity.Id.ToString(), new PartitionKey(entity.Id.ToString()));
+                ItemResponse<T> entityResult = await container.ReadItemAsync<T>(entityId, new PartitionKey(entityId));
                 return entityResult.Value;
             }
             catch (CosmosException ex)
             {
-                _log.LogError($"Entity with ID: {entity.Id} was not retrieved successfully - error details: {ex.Message}");
-                throw;
+                _log.LogError($"Entity with ID: {entityId} was not retrieved successfully - error details: {ex.Message}");
+
+                if (ex.ErrorCode != "404")
+                {
+                    throw;
+                }
+
+                return null;
             }
         }
 
@@ -79,7 +94,7 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
         {
             try
             {
-                var container = GetContainer();
+                CosmosContainer container = GetContainer();
 
                 ItemResponse<IEntity> entityResult = await container
                                                            .ReadItemAsync<IEntity>(entity.Id.ToString(), new PartitionKey(entity.Id.ToString()));
@@ -94,7 +109,13 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
             catch (CosmosException ex)
             {
                 _log.LogError($"Entity with ID: {entity.Id} was not updated successfully - error details: {ex.Message}");
-                throw;
+
+                if (ex.ErrorCode != "404")
+                {
+                    throw;
+                }
+
+                return null;
             }
         }
 
@@ -102,37 +123,28 @@ namespace AzureAI.CallCenterTalksAnalysis.Infrastructure.Services.Data
         {
             try
             {
-                var container = GetContainer();
-                var sqlQueryText = "SELECT * FROM c";
-                QueryDefinition queryDefinition = new QueryDefinition(sqlQueryText);
-                AsyncPageable<T> queryResultSetIterator = container.GetItemQueryIterator<T>(queryDefinition);
-                var iterator = queryResultSetIterator.GetAsyncEnumerator();
+                CosmosContainer container = GetContainer();
+                AsyncPageable<T> queryResultSetIterator = container.GetItemQueryIterator<T>();
                 List<T> entities = new List<T>();
 
-                try
+                await foreach (var entity in queryResultSetIterator)
                 {
-                    while (await iterator.MoveNextAsync())
-                    {
-                        var entity = iterator.Current;
-                        entities.Add(entity);
-                    }
-                }
-
-                finally
-                {
-                    if (iterator != null)
-                    {
-
-                        await iterator.DisposeAsync();
-                    }
+                    entities.Add(entity);
                 }
 
                 return entities;
+
             }
             catch (CosmosException ex)
             {
                 _log.LogError($"Entities was not retrieved successfully - error details: {ex.Message}");
-                throw;
+
+                if (ex.ErrorCode != "404")
+                {
+                    throw;
+                }
+
+                return null;
             }
         }
 
